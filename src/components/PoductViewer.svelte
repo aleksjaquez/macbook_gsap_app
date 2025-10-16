@@ -1,53 +1,63 @@
 <script>
-    import { mackookStore, setColor, setScale } from "../store";
+    import { macbookStore, setColor, setScale } from "../store";
     import { clsx } from "clsx";
+    import { Canvas } from "@threlte/core";
+    import Scene from "./Scene.svelte";
 </script>
 
 <section id="product-viewer">
     <h2>Take a closer look</h2>
     <div class="controls">
-        <p class="info">Macbook Pro 16" in {$mackookStore.color}</p>
+        <p class="info">
+            Macbook Pro {$macbookStore.scale} in {$macbookStore.color}
+        </p>
 
         <div class="flex-center gap-5 mt-5">
             <div class="color-control">
-                <div
+                <button
+                    aria-label="silver"
                     class={clsx(
                         "bg-neutral-300",
-                        $mackookStore.color === "#adb5bd" && "active"
+                        $macbookStore.color === "#adb5bd" && "active"
                     )}
                     onclick={() => setColor("#adb5bd")}
-                ></div>
-                <div
+                ></button>
+                <button
+                    aria-label="space gray"
                     class={clsx(
                         "bg-neutral-900",
-                        $mackookStore.color === "#2e2c2e" && "active"
+                        $macbookStore.color === "#2e2c2e" && "active"
                     )}
                     onclick={() => setColor("#2e2c2e")}
-                ></div>
+                ></button>
             </div>
             <div class="size-control">
-                <div
+                <button
                     onclick={() => setScale(0.06)}
                     class={clsx(
-                        $mackookStore.scale === 0.06
+                        $macbookStore.scale === 0.06
                             ? "bg-white text-black"
                             : "bg-transparent text-white"
                     )}
                 >
                     <p>14"</p>
-                </div>
-                <div
+                </button>
+                <button
                     onclick={() => setScale(0.08)}
                     class={clsx(
-                        $mackookStore.scale === 0.08
+                        $macbookStore.scale === 0.08
                             ? "bg-white text-black"
                             : "bg-transparent text-white"
                     )}
                 >
                     <p>16"</p>
-                </div>
+                </button>
             </div>
         </div>
     </div>
-    <p class="text-white text-4xl">Render Canvas</p>
+    <div id="canvas">
+        <Canvas>
+            <Scene />
+        </Canvas>
+    </div>
 </section>
