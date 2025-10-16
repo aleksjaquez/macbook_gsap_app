@@ -1,13 +1,21 @@
 <script lang="ts">
     import { macbookStore } from "../store";
     import { T } from "@threlte/core";
-    import { useGltf, OrbitControls } from "@threlte/extras";
-
-    const gltf = useGltf("models/macbook-14.glb");
+    import { useGltf, useDraco, OrbitControls } from "@threlte/extras";
+    const dracoLoader = useDraco();
+    const gltf = useGltf("models/macbook-14.glb", {
+        dracoLoader,
+    });
 </script>
 
-<T.PerspectiveCamera makeDefault position={[5, 5, 5]} fov={50}>
-    <OrbitControls />
+<T.PerspectiveCamera
+    makeDefault
+    position={[1, 20, 30]}
+    fov={100}
+    near={1}
+    far={100}
+>
+    <OrbitControls enableZoom={false} />
 </T.PerspectiveCamera>
 
 <T.DirectionalLight position={[10, 10, 5]} intensity={1} />
@@ -21,5 +29,5 @@
     </T.Mesh>
 {:then { scene }}
     <!-- Tu modelo cargado -->
-    <T is={scene} scale={1} />
+    <T is={scene} position={[0, 0.5, 0]} scale={10 * $macbookStore.scale} />
 {/await}
